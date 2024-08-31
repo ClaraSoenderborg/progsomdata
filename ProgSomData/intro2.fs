@@ -120,3 +120,71 @@ let rec eval3 (e:expr1) (env : (string * int) list) : int =
     
 
 let exampleIfTrue = eval3 (If(Var "a", CstI 11, CstI 22)) env
+
+
+// 1.2 i
+type aexpr =
+    | CstI of int
+    | Var of string
+    | Add of aexpr * aexpr
+    | Mul of aexpr * aexpr
+    | Sub of aexpr * aexpr
+    
+// 1.2 ii
+let expr1 = Sub(Var "v", Add(Var "w", Var "z"))
+let expr2 = Mul(CstI 2, Sub(Var "v", Add(Var "w", Var "z")))
+let expr3 = Add(Add(Var "x", Var "y"), Add(Var "z", Var "v"))
+
+// 1.2 iii
+
+let rec fmt e : string=
+    match e with
+    | CstI x -> string x
+    | Var s -> s
+    | Add (e1, e2) -> "(" + fmt e1 + " + " + fmt e2 + ")"
+    | Mul (e1, e2) -> "(" + fmt e1 + " * " + fmt e2 + ")"
+    | Sub (e1, e2) -> "(" + fmt e1 + " - " + fmt e2 + ")"
+    
+    
+// 1.2 iv
+
+let rec simplify e : aexpr =
+    match e with
+    | CstI 0 -> e
+    | Var s -> e
+    | Add(e1, e2) ->
+        match e1, e2 with
+        | CstI 0, _ -> simplify e2
+        | _ , CstI 0 -> simplify e1
+        | _, _  -> Add(simplify e1, simplify e2)
+    | Sub(e1, e2) ->
+        match e1, e2 with
+        | _,_ when e1 = e2 -> CstI 0
+        | _ , CstI 0 -> simplify e1
+        | _, _  -> Sub(simplify e1, simplify e2)
+    | Mul(e1, e2) ->
+        match e1, e2 with
+        | CstI 0, _ -> CstI 0
+        | _ , CstI 0 -> CstI 0
+        | _, _  -> Mul(simplify e1, simplify e2) 
+    | _ -> e
+    
+let simpEx1 = Add(Var "x", CstI 0)
+
+let simpEx2 = Mul(Var "x", CstI 0)
+
+let simpEx3 = Sub(Var "x", Var "x")
+
+// 1.2 v
+// Se evt. "Regneregler for symbolsk differentiering" 
+let rec diff (e: aexpr) (var: string) : aexpr =
+    match e with
+    | CstI _ -> CstI 0                            // d(a)/dx = 0, for konstante a 
+    | Var x -> if x = var then CstI 1 else CstI 0 // d(x)/dx = 1 eller d(y)/dx = 0 hvis y ikke er lig x
+    | Add (e1, e2) ->                             // d(e1 + e2)/dx = d(e1)/dx + d(e2)/dx
+        Add (diff e1 var, diff e2 var)
+    | Sub (e1, e2) ->                            // d(e1 - e2)/dx = d(e1)/dx - d(e2)/dx
+        Sub (diff e1 var, diff e2 var)
+    | Mul (e1, e2) ->                            // d(e1 * e2)/dx = (d(e1)/dx) * e2 + e1 * (d(e2)/dx)
+        Add (Mul (diff e1 var, e2), Mul (e1, diff e2 var))
+
