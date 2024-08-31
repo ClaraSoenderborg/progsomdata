@@ -48,11 +48,7 @@ let e2v1 = eval e2 env;;
 let e2v2 = eval e2 [("a", 314)];;
 let e3v  = eval e3 env;;
 
-
-
-
-
-(* 1.1 i*)
+// 1.1 i 
 let rec eval1 e (env : (string * int) list) : int =
     match e with
     | CstI i            -> i
@@ -71,7 +67,7 @@ let rec eval1 e (env : (string * int) list) : int =
     | Prim _            -> failwith "unknown primitive";;
     
     
-(*1.1 ii*)
+// 1.1 ii
 let exampleMax = eval1 (Prim("max", e1, e2)) env
 let exampleMin = eval1 (Prim("min", e1, e2)) env
 let exampleEqualTrue = eval1 (Prim("==", CstI 17, e1)) env
@@ -103,7 +99,6 @@ type expr1 =
   | If of expr1 * expr1 * expr1
   
 // 1.1 v
-
 let rec eval3 (e:expr1) (env : (string * int) list) : int =
     match e with
     | CstI i            -> i
