@@ -414,26 +414,6 @@ let exampleFreevars = Let(["x1", Prim("+", Var "x1", CstI 7)], Prim("+", Var "x1
 let exampleFreevarsClosed = Let(["x1", Prim("+", CstI 2, CstI 7)], Prim("+", Var "x1", CstI 8))
 
 // 2.3
-(*
-  type texpr =                            (* target expressions *)
-  | TCstI of int
-  | TVar of int                         (* index into runtime environment *)
-  | TLet of texpr * texpr               (* erhs and ebody                 *)
-  | TPrim of string * texpr * texpr;;
-
-
-let rec tcomp (e : expr) (cenv : string list) : texpr =
-    match e with
-    | CstI i -> TCstI i
-    | Var x  -> TVar (getindex cenv x)
-    | Let(x, erhs, ebody) -> 
-      let cenv1 = x :: cenv 
-      TLet(tcomp erhs cenv, tcomp ebody cenv1)
-    | Prim(ope, e1, e2) -> TPrim(ope, tcomp e1 cenv, tcomp e2 cenv);;
-*)
-
-
-
 let rec tcomp1 (e : expr1) (cenv : string list) : texpr =
     match e with
     | CstI i -> TCstI i
@@ -447,7 +427,6 @@ let rec tcomp1 (e : expr1) (cenv : string list) : texpr =
               let new_cenv = x :: cenv_acc
               let new_cenv_rest, compiled_rest = compileBindings rest new_cenv
               (new_cenv_rest, trhs :: compiled_rest)
-
             
         let rec buildNestedLets compiledBindings finalBody =
             match compiledBindings with
@@ -459,3 +438,6 @@ let rec tcomp1 (e : expr1) (cenv : string list) : texpr =
         buildNestedLets compiled_bindings finalBody
 
     | Prim(ope, e1, e2) -> TPrim(ope, tcomp1 e1 cenv, tcomp1 e2 cenv);;
+
+              
+let example1 = Let(["z", CstI 17], Prim("+", Var "z", Var "z"));;
