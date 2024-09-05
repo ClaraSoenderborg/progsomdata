@@ -5,10 +5,13 @@
 import java.util.Map;
 import java.util.HashMap;
 
+// 1.4 (i) 
 abstract class Expr { 
-  abstract public int eval(Map<String,Integer> env);
-  abstract public String fmt();
-  abstract public String fmt2(Map<String,Integer> env);
+  abstract public int eval(Map<String,Integer> env); //1.4 (iii)
+  abstract public String toString();                 //1.4.(i)
+  abstract public Expr simplify();                   //1.4 (iv)
+  
+  
 }
 
 class CstI extends Expr { 
@@ -18,17 +21,23 @@ class CstI extends Expr {
     this.i = i; 
   }
 
+  //1.4 (iii)
   public int eval(Map<String,Integer> env) {
     return i;
   } 
 
-  public String fmt() {
+  //1.4 (i)
+  public String toString() {
     return ""+i;
   }
 
-  public String fmt2(Map<String,Integer> env) {
-    return ""+i;
+
+  //1.4 (iv)
+  public Expr simplify() { 
+    return this; 
   }
+
+
 }
 
 class Var extends Expr { 
@@ -38,65 +47,192 @@ class Var extends Expr {
     this.name = name; 
   }
 
+  //1.4 (iii)
   public int eval(Map<String,Integer> env) {
     return env.get(name);
   } 
 
-  public String fmt() {
+  //1.4 (i)
+  public String toString() {
     return name;
   } 
 
-  public String fmt2(Map<String,Integer> env) {
-    return ""+env.get(name);
-  } 
+  //1.4 (iv)
+  public Expr simplify() { 
+    return this; 
+  }
+
 
 }
 
-class Prim extends Expr { 
-  protected final String oper;
-  protected final Expr e1, e2;
 
-  public Prim(String oper, Expr e1, Expr e2) { 
-    this.oper = oper; this.e1 = e1; this.e2 = e2;
+abstract class Binop extends Expr {
+
+  protected final Expr E1, E2; 
+
+  public Binop(Expr E1, Expr E2) { 
+    this.E1 = E1;
+    this.E2 = E2; 
   }
 
+  public boolean isE1Zero (){
+    if(E1 instanceof CstI){
+      return (((CstI)E1).i == 0);
+    } else {
+      return false;
+    }
+  }
+
+  public boolean isE2Zero (){
+    if(E2 instanceof CstI) {
+      return (((CstI)E2).i == 0);
+    } else {
+      return false; 
+    }
+  }
+
+  public boolean isE1One (){
+    if(E1 instanceof CstI) {
+      return (((CstI)E1).i == 1);
+    } else {
+      return false;
+    }
+  }
+
+  public boolean isE2One (){
+    if(E2 instanceof CstI) {
+      return (((CstI)E2).i == 1);
+    } else {
+      return false; 
+    }
+    
+    
+  }
+
+}
+
+class Add extends Binop {
+
+  public Add(Expr E1, Expr E2) { 
+     super (E1, E2);
+  }
+
+  //1.4 (i)
+  public String toString() {
+
+    return "(" + E1 + " + " + E2 + ")";
+
+  }
+
+  //1.4 (iii)
   public int eval(Map<String,Integer> env) {
-    if (oper.equals("+"))
-      return e1.eval(env) + e2.eval(env);
-    else if (oper.equals("*"))
-      return e1.eval(env) * e2.eval(env);
-    else if (oper.equals("-"))
-      return e1.eval(env) - e2.eval(env);
-    else
-      throw new RuntimeException("unknown primitive");
-  } 
+    return E1.eval(env) + E2.eval(env);
+  }
 
-  public String fmt() {
-    return "(" + e1.fmt() + oper + e2.fmt() + ")";
-  } 
+  //1.4 (iv)
+  public Expr simplify() { 
+    if (isE1Zero()) {
+      return E2.simplify();
+    } else if (isE2Zero()){
+      return E1.simplify();
+    } else {
+      return this;
+    }
+  }
 
-  public String fmt2(Map<String,Integer> env) {
-    return "(" + e1.fmt2(env) + oper + e2.fmt2(env) + ")";
-  } 
+  
+
+}
+
+class Sub extends Binop {
+
+  public Sub(Expr E1, Expr E2) { 
+     super (E1, E2);
+  }
+
+  //1.4 (i)
+  public String toString() {
+
+    return "(" + E1 + " - " + E2 + ")";
+
+  }
+
+  //1.4 (iii)
+  public int eval(Map<String,Integer> env) {
+    return E1.eval(env) - E2.eval(env);
+  }
+
+  //1.4 (iv)
+  public Expr simplify() { 
+     if (isE2Zero()){
+      return E1.simplify();
+    } else if (E1.toString().equals(E2.toString())) {
+      return new CstI(0);
+    } else {
+      return this;
+    }
+  }
+  
+
+}
+
+
+class Mul extends Binop {
+
+  public Mul(Expr E1, Expr E2) { 
+     super (E1, E2);
+  }
+
+  //1.4 (i)
+  public String toString() {
+
+    return "(" + E1 + " * " + E2 + ")";
+
+  }
+
+  //1.4 (iii)
+  public int eval(Map<String,Integer> env) {
+    return E1.eval(env) * E2.eval(env);
+  }
+
+  //1.4 (iv)
+  public Expr simplify() { 
+    if (isE1One()){
+     return E2.simplify();
+   } else if (isE2One()) {
+     return E1.simplify();
+   } else if (isE1Zero() || isE2Zero())  {
+      return new CstI(0);
+   } else {
+     return this;
+   }
+  }
 
 }
 
 public class SimpleExpr {
   public static void main(String[] args) {
-    Expr e1 = new CstI(17);
-    Expr e2 = new Prim("+", new CstI(3), new Var("a"));
-    Expr e3 = new Prim("+", new Prim("*", new Var("b"), new CstI(9)), 
-		            new Var("a"));
-    Map<String,Integer> env0 = new HashMap<String,Integer>();
-    env0.put("a", 3);
-    env0.put("c", 78);
-    env0.put("baf", 666);
-    env0.put("b", 111);
+    
+    //1.4 (i)
+    Expr e = new Add(new CstI(17), new Var("z"));
+    System.out.println(e.toString());
 
-    System.out.println("Env: " + env0.toString());
+    //1.4 (ii) 
+    Expr e1 = new Sub(new Var("v"), new Add(new Var("w"), new Var ("z")));
+    System.out.println(e1.toString());
 
-    System.out.println(e1.fmt() + " = " + e1.fmt2(env0) + " = " + e1.eval(env0));
-    System.out.println(e2.fmt() + " = " + e2.fmt2(env0) + " = " + e2.eval(env0));
-    System.out.println(e3.fmt() + " = " + e3.fmt2(env0) + " = " + e3.eval(env0));
+    Expr e2 = new Mul(new CstI(2), new Sub(new Var("v"), new Add(new Var("w"), new Var ("z"))));
+    System.out.println(e2.toString());
+
+    Expr e3 = new Add(new Add(new Var ("x"), new Var ("y")), new Add(new Var("z"), new Var("v")));
+    System.out.println(e3.toString());
+
+    //1.4 (iv)
+    System.out.println((new Add(new Var ("x"), new CstI(0))).simplify().toString());
+    System.out.println((new Mul(new Var ("x"), new CstI(0))).simplify());
+    System.out.println((new Sub(new Var("x"), new Var("x"))).simplify());
+
   }
 }
+
+
