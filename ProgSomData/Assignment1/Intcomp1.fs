@@ -413,3 +413,30 @@ let rec freevars1 (e:expr1) : string list =
 let exampleFreevars = Let(["x1", Prim("+", Var "x1", CstI 7)], Prim("+", Var "x1", CstI 8))
 let exampleFreevarsClosed = Let(["x1", Prim("+", CstI 2, CstI 7)], Prim("+", Var "x1", CstI 8))
 
+// 2.3
+(*
+  type texpr =                            (* target expressions *)
+  | TCstI of int
+  | TVar of int                         (* index into runtime environment *)
+  | TLet of texpr * texpr               (* erhs and ebody                 *)
+  | TPrim of string * texpr * texpr;;
+
+
+let rec tcomp (e : expr) (cenv : string list) : texpr =
+    match e with
+    | CstI i -> TCstI i
+    | Var x  -> TVar (getindex cenv x)
+    | Let(x, erhs, ebody) -> 
+      let cenv1 = x :: cenv 
+      TLet(tcomp erhs cenv, tcomp ebody cenv1)
+    | Prim(ope, e1, e2) -> TPrim(ope, tcomp e1 cenv, tcomp e2 cenv);;
+*)
+
+let rec tcomp1 (e : expr1) (cenv : string list) : texpr =
+    match e with
+    | CstI i -> TCstI i
+    | Var x  -> TVar (getindex cenv x)
+    | Let(vars, ex) -> 
+      let cenv1 = List.fold (fun lst (s,_) -> s::lst) cenv vars
+      TLet(tcomp1 (snd vars.Head) cenv, tcomp1 ex cenv1)
+    | Prim(ope, e1, e2) -> TPrim(ope, tcomp1 e1 cenv, tcomp1 e2 cenv);;
