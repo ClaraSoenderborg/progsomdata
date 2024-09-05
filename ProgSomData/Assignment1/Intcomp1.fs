@@ -10,12 +10,13 @@ module Intcomp1
 type expr = 
   | CstI of int
   | Var of string
-  | Let of (string * expr) list * expr
+  | Let of string * expr * expr
   | Prim of string * expr * expr;;
 
 (* Some closed expressions: *)
 
 let e1 = Let("z", CstI 17, Prim("+", Var "z", Var "z"));;
+
 
 let e2 = Let("z", CstI 17, 
              Prim("+", Let("z", CstI 22, Prim("*", CstI 100, Var "z")),
@@ -378,4 +379,37 @@ let intsToFile (inss : int list) (fname : string) =
     System.IO.File.WriteAllText(fname, text);;
 
 (* -----------------------------------------------------------------  *)
+
+// 2.1
+type expr1 = 
+  | CstI of int
+  | Var of string
+  | Let of (string * expr1) list * expr1
+  | Prim of string * expr1 * expr1
+
+let rec eval1 (e:expr1) (env : (string * int) list) : int =
+    match e with
+    | CstI i            -> i
+    | Var x             -> lookup env x 
+    | Let(vars, ex) -> 
+      let env1 = (List.map (fun (s,x) -> s, eval1 x env) vars) @ env 
+      eval1 ex env1
+    | Prim("+", e1, e2) -> eval1 e1 env + eval1 e2 env
+    | Prim("*", e1, e2) -> eval1 e1 env * eval1 e2 env
+    | Prim("-", e1, e2) -> eval1 e1 env - eval1 e2 env
+    | Prim _            -> failwith "unknown primitive";;
+
+// 2.2
+
+let rec freevars1 (e:expr1) : string list =
+    match e with
+    | CstI i -> []
+    | Var x  -> [x]
+    | Let(vars, ex) -> 
+          let lst = List.fold (fun lst (_,x) -> union (freevars1 x, lst)) [] vars
+          union (lst, minus (freevars1 ex, List.map (fun (x,_) -> x) vars))
+    | Prim(ope, e1, e2) -> union (freevars1 e1, freevars1 e2);;
+
+let exampleFreevars = Let(["x1", Prim("+", Var "x1", CstI 7)], Prim("+", Var "x1", CstI 8))
+let exampleFreevarsClosed = Let(["x1", Prim("+", CstI 2, CstI 7)], Prim("+", Var "x1", CstI 8))
 
