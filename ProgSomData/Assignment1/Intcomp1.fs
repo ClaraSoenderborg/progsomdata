@@ -432,11 +432,30 @@ let rec tcomp (e : expr) (cenv : string list) : texpr =
     | Prim(ope, e1, e2) -> TPrim(ope, tcomp e1 cenv, tcomp e2 cenv);;
 *)
 
+
+
 let rec tcomp1 (e : expr1) (cenv : string list) : texpr =
     match e with
     | CstI i -> TCstI i
     | Var x  -> TVar (getindex cenv x)
-    | Let(vars, ex) -> 
-      let cenv1 = List.fold (fun lst (s,_) -> s::lst) cenv vars
-      TLet(tcomp1 (snd vars.Head) cenv, tcomp1 ex cenv1)
+    | Let(bindings, ebody) -> 
+        let rec compileBindings (bindings : (string * expr1) list) (cenv_acc : string list) =
+          match bindings with
+          | [] -> (cenv_acc, [])
+          | (x, erhs) :: rest -> 
+              let trhs = tcomp1 erhs cenv_acc
+              let new_cenv = x :: cenv_acc
+              let new_cenv_rest, compiled_rest = compileBindings rest new_cenv
+              (new_cenv_rest, trhs :: compiled_rest)
+
+            
+        let rec buildNestedLets compiledBindings finalBody =
+            match compiledBindings with
+            | [] -> finalBody
+            | trhs :: rest -> TLet(trhs, buildNestedLets rest finalBody)
+        
+        let (new_cenv, compiled_bindings) = compileBindings bindings cenv
+        let finalBody = tcomp1 ebody new_cenv
+        buildNestedLets compiled_bindings finalBody
+
     | Prim(ope, e1, e2) -> TPrim(ope, tcomp1 e1 cenv, tcomp1 e2 cenv);;
