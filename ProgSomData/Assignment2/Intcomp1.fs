@@ -328,7 +328,7 @@ type sinstr =
   | SSub                                (* pop args, push diff.   *)
   | SMul                                (* pop args, push product *)
   | SPop                                (* pop value/unbind var   *)
-  | SSwap;;                             (* exchange top and next  *)
+  | SSwap                             (* exchange top and next  *)
  
 let rec seval (inss : sinstr list) (stack : int list) =
     match (inss, stack) with
@@ -441,3 +441,20 @@ let rec tcomp1 (e : expr1) (cenv : string list) : texpr =
 
               
 let example1 = Let(["z", CstI 17], Prim("+", Var "z", Var "z"));;
+
+// 2.4
+
+let sinstrToInt (s:sinstr) : int list =
+  match s with 
+  | SCstI x -> [0;x]
+  | SVar x -> [1;x]
+  | SAdd -> [2]
+  | SSub -> [3]
+  | SMul -> [4]
+  | SPop -> [5]
+  | SSwap -> [6]
+
+  
+let assemble (lst:sinstr list) : int list =
+  List.fold (fun acc s -> acc @ sinstrToInt s) [] lst
+  
