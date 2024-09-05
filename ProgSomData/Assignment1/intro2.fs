@@ -15,7 +15,7 @@ let rec lookup env x =
     | []        -> failwith (x + " not found")
     | (y, v)::r -> if x=y then v else lookup r x;;
 
-let cvalue = lookup env "c";;
+let cvalue: int = lookup env "c";;
 
 
 (* Object language expressions with variables *)
@@ -25,9 +25,9 @@ type expr =
   | Var of string
   | Prim of string * expr * expr;;
 
-let e1 = CstI 17;;
+let e1: expr = CstI 17;;
 
-let e2 = Prim("+", CstI 3, Var "a");;
+let e2: expr = Prim("+", CstI 3, Var "a");;
 
 let e3 = Prim("+", Prim("*", Var "b", CstI 9), Var "a");;
 
@@ -131,8 +131,8 @@ type aexpr =
     | Sub of aexpr * aexpr
     
 // 1.2 ii
-let expr1 = Sub(Var "v", Add(Var "w", Var "z"))
-let expr2 = Mul(CstI 2, Sub(Var "v", Add(Var "w", Var "z")))
+let expr1: aexpr = Sub(Var "v", Add(Var "w", Var "z"))
+let expr2: aexpr = Mul(CstI 2, Sub(Var "v", Add(Var "w", Var "z")))
 let expr3 = Add(Add(Var "x", Var "y"), Add(Var "z", Var "v"))
 
 // 1.2 iii
