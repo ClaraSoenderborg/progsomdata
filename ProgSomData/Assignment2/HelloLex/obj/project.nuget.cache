@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "YpUNUwqo3T0=",
+  "success": true,
+  "projectFilePath": "/Users/sarahschalls/Desktop/Uni/5. Semester/Programmer som data /progsomdata/ProgSomData/Assignment2/HelloLex/hello2.fsproj",
+  "expectedPackageFiles": [
+    "/Users/sarahschalls/.nuget/packages/fsharp.core/8.0.400/fsharp.core.8.0.400.nupkg.sha512"
+  ],
+  "logs": []
+}

@@ -1,0 +1,5 @@
+/Users/sarahschalls/Desktop/Uni/5. Semester/Programmer som data /progsomdata/ProgSomData/Assignment2/HelloLex/obj/Debug/net8.0/hello2.fsproj.AssemblyReference.cache
+/Users/sarahschalls/Desktop/Uni/5. Semester/Programmer som data /progsomdata/ProgSomData/Assignment2/HelloLex/obj/Debug/net8.0/hello2.AssemblyInfoInputs.cache
+/Users/sarahschalls/Desktop/Uni/5. Semester/Programmer som data /progsomdata/ProgSomData/Assignment2/HelloLex/obj/Debug/net8.0/hello2.AssemblyInfo.fs
+/Users/sarahschalls/Desktop/Uni/5. Semester/Programmer som data /progsomdata/ProgSomData/Assignment2/HelloLex/obj/Debug/net8.0/hello2.fsproj.CoreCompileInputs.cache
+/Users/sarahschalls/Desktop/Uni/5. Semester/Programmer som data /progsomdata/ProgSomData/Assignment2/HelloLex/obj/Debug/net8.0/hello2.sourcelink.json
