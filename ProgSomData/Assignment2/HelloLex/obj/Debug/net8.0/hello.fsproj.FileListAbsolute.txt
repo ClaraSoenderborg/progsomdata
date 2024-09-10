@@ -1,0 +1,5 @@
+/Users/clarasonderborg/Documents/Uni/Semester5/ProgSomData/ProgSomData/ProgSomData/Assignment2/HelloLex/obj/Debug/net8.0/hello.fsproj.AssemblyReference.cache
+/Users/clarasonderborg/Documents/Uni/Semester5/ProgSomData/ProgSomData/ProgSomData/Assignment2/HelloLex/obj/Debug/net8.0/hello.AssemblyInfoInputs.cache
+/Users/clarasonderborg/Documents/Uni/Semester5/ProgSomData/ProgSomData/ProgSomData/Assignment2/HelloLex/obj/Debug/net8.0/hello.AssemblyInfo.fs
+/Users/clarasonderborg/Documents/Uni/Semester5/ProgSomData/ProgSomData/ProgSomData/Assignment2/HelloLex/obj/Debug/net8.0/hello.fsproj.CoreCompileInputs.cache
+/Users/clarasonderborg/Documents/Uni/Semester5/ProgSomData/ProgSomData/ProgSomData/Assignment2/HelloLex/obj/Debug/net8.0/hello.sourcelink.json
