@@ -16,3 +16,11 @@ How many states are there by the automaton of the lexer?
 
 ## Answer 
 3 states.
+
+# Question 6
+Consider the 3 examples of input provided at the prompt and
+the result.
+Explain why the results are expected behaviour from the lexer.
+
+## Answer
+Because hello3 lexer only accepts integers 0-9 and floating numbers that are written with integers 0-9, a period '.' and more integers 0-9. It does not accept commas ',', so the regex only reads everything before the comma. 

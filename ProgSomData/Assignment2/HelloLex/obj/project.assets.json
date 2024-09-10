@@ -113,9 +113,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/clarasonderborg/Documents/Uni/Semester5/ProgSomData/ProgSomData/ProgSomData/Assignment2/HelloLex/hello.fsproj",
-      "projectName": "hello",
-      "projectPath": "/Users/clarasonderborg/Documents/Uni/Semester5/ProgSomData/ProgSomData/ProgSomData/Assignment2/HelloLex/hello.fsproj",
+      "projectUniqueName": "/Users/clarasonderborg/Documents/Uni/Semester5/ProgSomData/ProgSomData/ProgSomData/Assignment2/HelloLex/hello3.fsproj",
+      "projectName": "hello3",
+      "projectPath": "/Users/clarasonderborg/Documents/Uni/Semester5/ProgSomData/ProgSomData/ProgSomData/Assignment2/HelloLex/hello3.fsproj",
       "packagesPath": "/Users/clarasonderborg/.nuget/packages/",
       "outputPath": "/Users/clarasonderborg/Documents/Uni/Semester5/ProgSomData/ProgSomData/ProgSomData/Assignment2/HelloLex/obj/",
       "projectStyle": "PackageReference",
