@@ -458,3 +458,5 @@ let sinstrToInt (s:sinstr) : int list =
 let assemble (lst:sinstr list) : int list =
   List.fold (fun acc s -> acc @ sinstrToInt s) [] lst
   
+// 2.5 
+(* We have compiled the Machine.java, and it gives the result 34.*)

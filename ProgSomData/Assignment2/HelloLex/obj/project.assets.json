@@ -2,7 +2,7 @@
   "version": 3,
   "targets": {
     "net8.0": {
-      "FSharp.Core/8.0.100": {
+      "FSharp.Core/8.0.400": {
         "type": "package",
         "compile": {
           "lib/netstandard2.1/FSharp.Core.dll": {
@@ -59,15 +59,15 @@
     }
   },
   "libraries": {
-    "FSharp.Core/8.0.100": {
-      "sha512": "ZOVZ/o+jI3ormTZOa28Wh0tSRoyle1f7lKFcUN61sPiXI7eDZu8eSveFybgTeyIEyW0ujjp31cp7GOglDgsNEg==",
+    "FSharp.Core/8.0.400": {
+      "sha512": "kHMdDDmlZl98tujgHCmL8/HNH9VKbxsRMC9s7wbwr4noR40SSa5D4d00yF8cMK52s8jabVuiLLcrUw9r+PkKDQ==",
       "type": "package",
-      "path": "fsharp.core/8.0.100",
+      "path": "fsharp.core/8.0.400",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "Icon.png",
-        "fsharp.core.8.0.100.nupkg.sha512",
+        "fsharp.core.8.0.400.nupkg.sha512",
         "fsharp.core.nuspec",
         "lib/netstandard2.0/FSharp.Core.dll",
         "lib/netstandard2.0/FSharp.Core.xml",
@@ -104,29 +104,29 @@
   },
   "projectFileDependencyGroups": {
     "net8.0": [
-      "FSharp.Core >= 8.0.100"
+      "FSharp.Core >= 8.0.400"
     ]
   },
   "packageFolders": {
-    "/Users/clarasonderborg/.nuget/packages/": {}
+    "/Users/sarahschalls/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/clarasonderborg/Documents/Uni/Semester5/ProgSomData/ProgSomData/ProgSomData/Assignment2/HelloLex/hello3.fsproj",
+      "projectUniqueName": "/Users/sarahschalls/Desktop/Uni/5. Semester/Programmer som data /progsomdata/ProgSomData/Assignment2/HelloLex/hello3.fsproj",
       "projectName": "hello3",
-      "projectPath": "/Users/clarasonderborg/Documents/Uni/Semester5/ProgSomData/ProgSomData/ProgSomData/Assignment2/HelloLex/hello3.fsproj",
-      "packagesPath": "/Users/clarasonderborg/.nuget/packages/",
-      "outputPath": "/Users/clarasonderborg/Documents/Uni/Semester5/ProgSomData/ProgSomData/ProgSomData/Assignment2/HelloLex/obj/",
+      "projectPath": "/Users/sarahschalls/Desktop/Uni/5. Semester/Programmer som data /progsomdata/ProgSomData/Assignment2/HelloLex/hello3.fsproj",
+      "packagesPath": "/Users/sarahschalls/.nuget/packages/",
+      "outputPath": "/Users/sarahschalls/Desktop/Uni/5. Semester/Programmer som data /progsomdata/ProgSomData/Assignment2/HelloLex/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/Users/clarasonderborg/.nuget/NuGet/NuGet.Config"
+        "/Users/sarahschalls/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net8.0"
       ],
       "sources": {
-        "/usr/local/share/dotnet/sdk/8.0.100/FSharp/library-packs": {},
+        "/usr/local/share/dotnet/sdk/8.0.401/FSharp/library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -134,6 +134,11 @@
           "targetAlias": "net8.0",
           "projectReferences": {}
         }
+      },
+      "restoreAuditProperties": {
+        "enableAudit": "true",
+        "auditLevel": "low",
+        "auditMode": "direct"
       }
     },
     "frameworks": {
@@ -143,7 +148,7 @@
           "FSharp.Core": {
             "include": "Runtime, Compile, Build, Native, Analyzers, BuildTransitive",
             "target": "Package",
-            "version": "[8.0.100, )",
+            "version": "[8.0.400, )",
             "generatePathProperty": true
           }
         },
@@ -163,7 +168,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.100/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.401/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

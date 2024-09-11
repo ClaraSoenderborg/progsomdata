@@ -1,10 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "8BMnNTKotXxmQ9BJvsETKR4MdbFuyNJ7tz+0m5yUvwnB9+bO2p6lNFutbfWBWIf8J2O2HOoJ9WgzUVuajIz+eQ==",
+  "dgSpecHash": "Q0fyg4Ik7vg=",
   "success": true,
-  "projectFilePath": "/Users/clarasonderborg/Documents/Uni/Semester5/ProgSomData/ProgSomData/ProgSomData/Assignment2/HelloLex/hello3.fsproj",
+  "projectFilePath": "/Users/sarahschalls/Desktop/Uni/5. Semester/Programmer som data /progsomdata/ProgSomData/Assignment2/HelloLex/hello3.fsproj",
   "expectedPackageFiles": [
-    "/Users/clarasonderborg/.nuget/packages/fsharp.core/8.0.100/fsharp.core.8.0.100.nupkg.sha512"
+    "/Users/sarahschalls/.nuget/packages/fsharp.core/8.0.400/fsharp.core.8.0.400.nupkg.sha512"
   ],
   "logs": []
 }
