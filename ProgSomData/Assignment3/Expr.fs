@@ -6,6 +6,7 @@ module Expr
 
 open System.IO
 open Absyn
+open Parse
 
 (* From file expr/expr.sml * Simple arithmetic expressions *)
  
@@ -314,6 +315,12 @@ let rec scomp e (cenv : rtvalue list) : sinstr list =
 let s1 = scomp e1 []
 let s2 = scomp e2 []
 let s3 = scomp e3 []
+
+// 3.6 
+let compString (s: string) : sinstr list =  
+      scomp (fromString s) []
+
+
 
 (* Correctness: eval e [] [] equals seval (scomp e []) [] 
    for an expression with no free variables.

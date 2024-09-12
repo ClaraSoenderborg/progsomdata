@@ -19,3 +19,7 @@ See ex3_4.JPG
 Done
 
 # Exercise 3.6
+See Expr.fs 
+
+# Exercise 3.7 
+See Absyn.fs & ExprLex.fsl & ExprPar.fsy :)
