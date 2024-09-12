@@ -9,7 +9,8 @@
 %token <int> CSTINT
 %token <string> NAME
 %token PLUS MINUS TIMES DIVIDE EQ
-%token END IN LET IF THEN ELSE /* 3,7 */ 
+%token END IN LET 
+%token IF THEN ELSE /* 3,7 */ 
 %token LPAR RPAR
 %token EOF
 

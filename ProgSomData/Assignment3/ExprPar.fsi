@@ -4,12 +4,12 @@ type token =
   | EOF
   | LPAR
   | RPAR
-  | END
-  | IN
-  | LET
   | IF
   | THEN
   | ELSE
+  | END
+  | IN
+  | LET
   | PLUS
   | MINUS
   | TIMES
@@ -21,12 +21,12 @@ type tokenId =
     | TOKEN_EOF
     | TOKEN_LPAR
     | TOKEN_RPAR
-    | TOKEN_END
-    | TOKEN_IN
-    | TOKEN_LET
     | TOKEN_IF
     | TOKEN_THEN
     | TOKEN_ELSE
+    | TOKEN_END
+    | TOKEN_IN
+    | TOKEN_LET
     | TOKEN_PLUS
     | TOKEN_MINUS
     | TOKEN_TIMES
