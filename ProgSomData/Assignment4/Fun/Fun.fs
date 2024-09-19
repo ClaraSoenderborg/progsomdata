@@ -52,10 +52,10 @@ let rec eval (e : expr) (env : value env) : int =
       let b = eval e1 env
       if b<>0 then eval e2 env
       else eval e3 env
-    | Letfun(f, params, fBody, letBody) -> 
+    | Letfun(f, params, fBody, letBody) -> (* 4.3 *)
       let bodyEnv = (f, Closure(f, params, fBody, env)) :: env 
       eval letBody bodyEnv
-    | Call(Var f, paramExprs) -> 
+    | Call(Var f, paramExprs) ->  (* 4.3 *)
       let fClosure = lookup env f
       match fClosure with
       | Closure (f, paramNames, fBody, fDeclEnv) ->

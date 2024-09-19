@@ -16,3 +16,13 @@ Done
 `run (fromString "let pow a = a * a * a * a * a * a * a * a in let foo x = if x = 0 then 0 else foo (x - 1) + pow x in foo 10 end end");;`
 
 We are so very sorry for this ugly code, plz dont hate :'(
+
+# Exercise 4.3
+see Absyn.fs and Fun.fs
+
+# Exercise 4.4
+see FunPar.fsy
+
+# Exercise 4.5
+see FunPar.fsl and FunPar.fsy
+Tested with `run (fromString "if 1=1 || false then 2 else 6");;`
