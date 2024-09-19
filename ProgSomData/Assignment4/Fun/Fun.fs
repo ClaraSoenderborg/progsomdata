@@ -24,7 +24,7 @@ let rec lookup env x =
 
 type value = 
   | Int of int
-  | Closure of string * string * expr * value env       (* (f, x, fBody, fDeclEnv) *)
+  | Closure of string * string list * expr * value env       (* (f, x, fBody, fDeclEnv) *)
 
 let rec eval (e : expr) (env : value env) : int =
     match e with 
@@ -52,15 +52,16 @@ let rec eval (e : expr) (env : value env) : int =
       let b = eval e1 env
       if b<>0 then eval e2 env
       else eval e3 env
-    | Letfun(f, x, fBody, letBody) -> 
-      let bodyEnv = (f, Closure(f, x, fBody, env)) :: env 
+    | Letfun(f, params, fBody, letBody) -> 
+      let bodyEnv = (f, Closure(f, params, fBody, env)) :: env 
       eval letBody bodyEnv
-    | Call(Var f, eArg) -> 
+    | Call(Var f, paramExprs) -> 
       let fClosure = lookup env f
       match fClosure with
-      | Closure (f, x, fBody, fDeclEnv) ->
-        let xVal = Int(eval eArg env)
-        let fBodyEnv = (x, xVal) :: (f, fClosure) :: fDeclEnv
+      | Closure (f, paramNames, fBody, fDeclEnv) ->
+        let paramValues = List.map (fun ex -> Int(eval ex env)) paramExprs
+        let zippedParams = List.zip paramNames paramValues 
+        let fBodyEnv = zippedParams @ (f, fClosure) :: fDeclEnv
         eval fBody fBodyEnv
       | _ -> failwith "eval Call: not a function"
     | Call _ -> failwith "eval Call: not first-order function"
@@ -71,22 +72,22 @@ let run e = eval e [];;
 
 (* Examples in abstract syntax *)
 
-let ex1 = Letfun("f1", "x", Prim("+", Var "x", CstI 1), 
-                 Call(Var "f1", CstI 12));;
+let ex1 = Letfun("f1", ["x"], Prim("+", Var "x", CstI 1), 
+                 Call(Var "f1", [CstI 12]));;
 
-(* Example: factorial *)
+(* Example: factorial 
 
-let ex2 = Letfun("fac", "x",
+let ex2 = Letfun("fac", ["x"],
                  If(Prim("=", Var "x", CstI 0),
                     CstI 1,
                     Prim("*", Var "x", 
                               Call(Var "fac", 
                                    Prim("-", Var "x", CstI 1)))),
-                 Call(Var "fac", Var "n"));;
+                 Call(Var "fac", [Var "n"]));;*)
 
 (* let fac10 = eval ex2 [("n", Int 10)];; *)
 
-(* Example: deep recursion to check for constant-space tail recursion *)
+(* Example: deep recursion to check for constant-space tail recursion 
 
 let ex3 = Letfun("deep", "x", 
                  If(Prim("=", Var "x", CstI 0),
@@ -113,4 +114,5 @@ let ex5 =
                           Call(Var "fib", Prim("-", Var "n", CstI 1)),
                           Call(Var "fib", Prim("-", Var "n", CstI 2))),
                      CstI 1), Call(Var "fib", CstI 25)));;
+                     *)
                      

@@ -56,13 +56,20 @@ AtExpr:
     Const                               { $1                     }
   | NAME                                { Var $1                 }
   | LET NAME EQ Expr IN Expr END        { Let($2, $4, $6)        }
-  | LET NAME NAME EQ Expr IN Expr END   { Letfun($2, $3, $5, $7) }
+  | LET NAME ParamList EQ Expr IN Expr END   { Letfun($2, $3, $5, $7) }
   | LPAR Expr RPAR                      { $2                     }
 ;
 
+ParamList:
+    NAME                                { [$1] }                  /* Single parameter */
+  | ParamList NAME                      { $1 @ [$2] }              /* Multiple parameters */
+;
+
 AppExpr:
-    AtExpr AtExpr                       { Call($1, $2)           }
-  | AppExpr AtExpr                      { Call($1, $2)           }
+    AtExpr AtExpr                       { Call($1, [$2])           }
+  | AppExpr AtExpr                      { match $1 with
+                                          | Call(f, args) -> Call(f, args @ [$2])
+                                          | _ -> Call($1, [$2])           }
 ;
 
 Const:
