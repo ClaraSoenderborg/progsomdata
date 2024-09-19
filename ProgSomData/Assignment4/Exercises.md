@@ -11,3 +11,6 @@ Done
 
 ## 4.2.3
 `run (fromString "let pow a = if a = 0 then 1 else 3 * pow (a - 1) in let foo x = if x = 0 then 1 else foo (x - 1) + pow x in foo 11 end end");;`
+
+## 4.2.4
+`run (fromString "let pow a = a * a * a * a * a * a * a * a in let foo x = if x = 0 then 0 else foo (x - 1) + pow x in foo 10 end end");;`
