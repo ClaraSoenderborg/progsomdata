@@ -37,7 +37,7 @@ type typ =
   | TypI                                (* int                         *)
   | TypB                                (* bool                        *)
   | TypF of typ * typ                   (* (argumenttype, resulttype)  *)
-  | TypL of typ
+  | TypL of typ                         (* list, element type is typ   *)
 
 (* New abstract syntax with explicit types, instead of Absyn.expr: *)
 
@@ -140,6 +140,14 @@ let rec typ (e : tyexpr) (env : typ env) : typ =
         else failwith "Call: wrong argument type"
       | _ -> failwith "Call: unknown function"
     | Call(_, eArg) -> failwith "Call: illegal function in call"
+    | ListExpr(exprlst, t) -> (* 5.7 *)
+      match exprlst with
+      | [] -> failwith "ListExpr: empty list"
+      | _ -> 
+        if List.forall (fun ex -> (typ ex env) = t) exprlst then
+          TypL(t)
+        else failwith "ListExpr: not all elements of the same type"
+
 
 let typeCheck e = typ e [];;
 
@@ -188,3 +196,13 @@ let exErr3 = Letfun("f", "x", TypB, Call(Var "f", CstI 22), TypI,
 
 let exErr4 = Letfun("f", "x", TypB, If(Var "x", CstI 11, CstI 22), TypB,
                     Call(Var "f", CstB true));;
+
+(* 5.7 *)
+let notSameTypes = ListExpr([ex1; ex2; ex4], TypI);;
+//let ex571 = typeCheck notSameTypes;;
+
+let sameTypes = ListExpr([ex1; ex2; ex3], TypI);;
+//let ex572 = typeCheck sameTypes;;
+
+let emptyList = ListExpr([], TypI);;
+//let ex573 = typeCheck emptyList;;
