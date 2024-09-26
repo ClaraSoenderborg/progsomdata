@@ -24,5 +24,5 @@ see Absyn.fs and Fun.fs
 see FunPar.fsy
 
 # Exercise 4.5
-see FunPar.fsl and FunPar.fsy
+see FunLex.fsl and FunPar.fsy
 Tested with `run (fromString "if 1=1 || false then 2 else 6");;`
