@@ -12,5 +12,8 @@ The third program returns ´Int 7´ which is as expected, as the x variable in l
 The result of the fourth program is a closure, because the add function is only given one argument, and therefore the y argument is not bound yet. 
 
 # Question 6.2 
-See FunLex.fsl, FunPar.fsy, HigherFun.fs and Absyn.fs
+See HigherFun.fs and Absyn.fs
+
+# Question 6.3
+See FunLex.fsl and FunPar.fsy 
 
