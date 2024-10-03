@@ -17,3 +17,7 @@ See HigherFun.fs and Absyn.fs
 # Question 6.3
 See FunLex.fsl and FunPar.fsy 
 
+# Question 6.4.1
+See ex6_4_1.jpg 
+f is polymorphic because it does not use the argument x in what it returns. In this example, f can take itself as an argument. 
+
