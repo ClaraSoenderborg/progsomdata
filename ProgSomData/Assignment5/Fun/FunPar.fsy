@@ -11,14 +11,15 @@
 %token <string> NAME
 %token <bool> CSTBOOL
 
-%token ELSE END FALSE IF IN LET NOT THEN TRUE
+%token ELSE END FALSE IF IN LET NOT THEN TRUE FUN /* 6.2 */ 
 %token PLUS MINUS TIMES DIV MOD
-%token EQ NE GT LT GE LE
+%token EQ NE GT LT GE LE LAM /* 6.2 */
 %token LPAR RPAR 
 %token EOF
 
+
 %left ELSE              /* lowest precedence  */
-%left EQ NE 
+%left EQ NE LAM         /* 6.2 */
 %left GT LT GE LE
 %left PLUS MINUS
 %left TIMES DIV MOD 
@@ -55,6 +56,7 @@ Expr:
 AtExpr:
     Const                               { $1                     }
   | NAME                                { Var $1                 }
+  | FUN NAME LAM Expr                   { Fun($2, $4)            } /* 6.2 */
   | LET NAME EQ Expr IN Expr END        { Let($2, $4, $6)        }
   | LET NAME NAME EQ Expr IN Expr END   { Letfun($2, $3, $5, $7) }
   | LPAR Expr RPAR                      { $2                     }
