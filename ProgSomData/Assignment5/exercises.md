@@ -47,14 +47,74 @@ f is not polymorphic in the body of let, because x is used to compare with an in
                            in f true end");;` is type bool. 
 
 # Question 6.5.2
-
-```
+bool -> bool
+```fsharp
 > inferType (fromString "let f x = 
 -                                 if x = true then true else false
 -                            in f end");;
 val it: string = "(bool -> bool)"
 ``` 
 
+int -> int
+```fsharp
+> inferType (fromString "let f x = 
+-                                 if x = 1 then 2 else 3
+-                            in f end");;
+val it: string = "(int -> int)"
+``` 
+
+int -> int -> int
+```fsharp
+> inferType (fromString "let f x =
+-                                  let g y = if x = 1 then y else x
+-                                  in g end
+-                            in f end");;
+val it: string = "(int -> (int -> int))"
+``` 
+
+'a -> 'b -> 'a
+```fsharp
+> inferType (fromString "let f x =
+-                                  let g y = x
+-                                  in g end
+-                            in f end");;
+val it: string = "('h -> ('g -> 'h))"
+```
+
+'a -> 'b -> 'b
+
+```fsharp
+> inferType (fromString "let f x =
+-                                  let g y = y
+-                                  in g end
+-                            in f end");;
+val it: string = "('g -> ('h -> 'h))"
+```
 
 
+(’a -> ’b) -> (’b -> ’c) -> (’a -> ’c)
+```fsharp
+> inferType (fromString "let f x =
+-                                  let g y =
+-                                     let h z = y (x z) 
+-                                     in h end
+-                                  in g end
+-                            in f end");;
+val it: string = "(('l -> 'k) -> (('k -> 'm) -> ('l -> 'm)))"
+```
 
+’a -> ’b
+```fsharp
+> inferType (fromString "let f x = 
+-                                  let g = f x                                  
+-                                  in g end
+-                            in f end");;
+val it: string = "('e -> 'f)"
+```
+
+’a
+```fsharp
+> inferType (fromString "let f x = f 8
+-                            in f 1 end");;
+val it: string = "'e"
+```
