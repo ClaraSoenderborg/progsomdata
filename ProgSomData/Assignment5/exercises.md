@@ -18,6 +18,11 @@ See HigherFun.fs and Absyn.fs
 See FunLex.fsl and FunPar.fsy 
 
 # Question 6.4.1
-See ex6_4_1.jpg 
-f is polymorphic because it does not use the argument x in what it returns. In this example, f can take itself as an argument. 
+See ex_6_4_i.jpg 
+f is polymorphic in the body of let because it does not use the argument x in what it returns. In this example, f can take itself as an argument. 
+
+# Question 6.4.2
+See ex_6_4_ii.jpg 
+f is not polymorphic in the body of let, because x is used to compare with an integer in the function body. 
+
 
