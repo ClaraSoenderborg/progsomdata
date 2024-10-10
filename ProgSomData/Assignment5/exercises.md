@@ -25,4 +25,27 @@ f is polymorphic in the body of let because it does not use the argument x in wh
 See ex_6_4_ii.jpg 
 f is not polymorphic in the body of let, because x is used to compare with an integer in the function body. 
 
+# Question 6.5.1
+´inferType (fromString "let f x = 1 in f f end");;´ is type int
+
+´inferType (fromString "let f g = g g in f end");;´ failure due to the type of g is circular, which the type of f depends on.
+
+`inferType (fromString "let f x =
+                                 let g y = y
+                                 in g false end
+                           in f 42 end");; ` is type bool
+
+´   inferType (fromString "let f x =
+                                 let g y = if true then y else x
+                                 in g false end
+                           in f 42 end");;` failure because the function f returns both bool and int. Ill-typed. 
+
+
+´   inferType (fromString "let f x =
+                                 let g y = if true then y else x
+                                 in g false end
+                           in f true end");;´ is type bool. 
+
+
+
 
