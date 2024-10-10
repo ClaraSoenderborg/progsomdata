@@ -46,6 +46,15 @@ f is not polymorphic in the body of let, because x is used to compare with an in
                                  in g false end
                            in f true end");;` is type bool. 
 
+# Question 6.5.2
+
+```
+> inferType (fromString "let f x = 
+-                                 if x = true then true else false
+-                            in f end");;
+val it: string = "(bool -> bool)"
+``` 
+
 
 
 
