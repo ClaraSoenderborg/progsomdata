@@ -1,9 +1,11 @@
 //7.2.(ii)
 
-int *sump;
+
 
 void main(int n) {
     int mainArray[20];
+
+    int *sump;
 
     squares(n, mainArray);
 

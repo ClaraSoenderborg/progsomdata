@@ -1,6 +1,6 @@
 //7.2.(i) 
 
-int *sump;
+
 
 void main() {
     int mainArray[4];
@@ -9,6 +9,7 @@ void main() {
     mainArray[2] = 9;
     mainArray[3] = 8;
 
+    int *sump;
     int n;
     n = 4;
 
