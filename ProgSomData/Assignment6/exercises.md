@@ -45,3 +45,5 @@ See Absyn.fs and Interp.fs
 
 # Question 7.5 
 See CPar.fsy and CLex.fsl 
+
+`run (fromFile "ex7_5.c") [];;`
