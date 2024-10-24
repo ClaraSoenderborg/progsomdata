@@ -188,3 +188,30 @@ clarasonderborg@Claras-MacBook-Pro MicroC % java Machine ex7_2_3.out
 1 4 2 0 
 Ran 0.018 seconds
 ```
+
+# Question 8.3 
+See Comp.fs 
+```
+sarahschalls@Sarahs-MacBook-Pro MicroC %    java Machine ex7_5.out 
+1 1 
+Ran 0.012 seconds
+```
+
+# Question 8.4 - Compile ex8.c and study the symbolic byte code to see why it is so much slower than the handwritten 20 million iterations loop in prog1.:
+
+```
+20000000; GOTO 7; 1; SUB; DUP; IFNZRO 4; STOP
+```
+
+```fsharp
+>    compile "ex8";; 
+val it: Machine.instr list =
+  [LDARGS; CALL (0, "L1"); STOP; Label "L1"; INCSP 1; GETBP; CSTI 0; ADD;
+   CSTI 20000000; STI; INCSP -1; GOTO "L3"; Label "L2"; GETBP; CSTI 0; ADD;
+   GETBP; CSTI 0; ADD; LDI; CSTI 1; SUB; STI; INCSP -1; INCSP 0; Label "L3";
+   GETBP; CSTI 0; ADD; LDI; IFNZRO "L2"; INCSP -1; RET -1]
+```
+
+ex8 is slow because the code need to look up value of i each iteration. When using GETBP, CSTI, LDI, STI it accesses memory which is slow. 
+
+# Question 8.4 - 
