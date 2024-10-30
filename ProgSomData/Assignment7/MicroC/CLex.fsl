@@ -28,7 +28,9 @@ let keyword s =
     | "true"    -> CSTBOOL 1
     | "void"    -> VOID 
     | "while"   -> WHILE 
-    | "for"     -> FOR    (* 7.3 *)     
+    | "for"     -> FOR    (* 7.3 *)  
+    | "switch"  -> SWITCH (* 8.6 *)  
+    | "case"    -> CASE (* 8.6 *)  
     | _         -> NAME s
  
 let cEscape s = 

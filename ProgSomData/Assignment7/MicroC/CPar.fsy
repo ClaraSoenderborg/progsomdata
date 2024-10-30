@@ -14,7 +14,7 @@ let nl = CstI 10
 %token <int> CSTINT CSTBOOL
 %token <string> CSTSTRING NAME
 
-%token CHAR ELSE IF INT NULL PRINT PRINTLN RETURN VOID WHILE FOR /* 7.3 */
+%token CHAR ELSE IF INT NULL PRINT PRINTLN RETURN VOID WHILE FOR SWITCH CASE /* 8.6 */
 %token PLUS MINUS TIMES DIV MOD 
 %token EQ NE GT LT GE LE PREDEC PREINC /* 7.5 */
 %token NOT SEQOR SEQAND
@@ -22,6 +22,7 @@ let nl = CstI 10
 %token EOF
 
 %right ASSIGN             /* lowest precedence */
+%right QUESTIONMARK COLON /* 8.5 */
 %nonassoc PRINT
 %left SEQOR
 %left SEQAND
@@ -103,6 +104,12 @@ StmtM:  /* No unbalanced if-else */
   | WHILE LPAR Expr RPAR StmtM          { While($3, $5)        }
   | FOR LPAR Expr SEMI Expr SEMI Expr RPAR StmtM 
                                         { Block [Stmt(Expr($3)); Stmt(While($5, Block [Stmt($9); Stmt(Expr($7))]))]} /* 7.3 */
+  | SWITCH LPAR Expr RPAR LBRACE Case RBRACE  { Switch($3, $6)  } /* 8.6 */
+;
+
+Case: /* 8.6 */
+    CASE CSTINT COLON Stmt         { [($2, $4)]            } 
+  | CASE CSTINT COLON Stmt Case    { ($2, $4) :: ($5)     }
 ;
 
 StmtU:

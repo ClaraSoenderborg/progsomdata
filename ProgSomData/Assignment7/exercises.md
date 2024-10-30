@@ -256,4 +256,25 @@ Ran 0.012 seconds
 sarahschalls@Sarahs-MacBook-Pro MicroC % 
 ```
 
+# Question 8.6
+See file Absyn.fs, CLex.fs, CPar.fsy, ex8_6.c 
 
+Our example from ex8_6.c:
+```fsharp
+> compileToFile (fromFile "ex8_6.c") "ex8_6.out";;
+val it: Machine.instr list =
+  [LDARGS; CALL (2, "L1"); STOP; Label "L1"; GETBP; CSTI 0; ADD; LDI; CSTI 3;
+   EQ; IFNZRO "L5"; GETBP; CSTI 0; ADD; LDI; CSTI 2; EQ; IFNZRO "L4"; GETBP;
+   CSTI 0; ADD; LDI; CSTI 1; EQ; IFNZRO "L3"; Label "L5"; CSTI 31; PRINTI;
+   INCSP -1; INCSP 0; GOTO "L2"; Label "L4"; GETBP; CSTI 1; ADD; LDI; CSTI 4;
+   MOD; CSTI 0; EQ; IFZERO "L6"; CSTI 29; PRINTI; INCSP -1; INCSP 0; GOTO "L7";
+   Label "L6"; CSTI 28; PRINTI; INCSP -1; INCSP 0; Label "L7"; INCSP 0;
+   GOTO "L2"; Label "L3"; CSTI 31; PRINTI; INCSP -1; INCSP 0; GOTO "L2";
+   Label "L2"; INCSP 0; RET 1]
+```
+
+```
+clarasonderborg@Claras-MacBook-Pro MicroC % java Machine ex8_6.out 2 2000
+29 
+Ran 0.02 seconds
+```
