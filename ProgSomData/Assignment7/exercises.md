@@ -233,5 +233,27 @@ val it: Machine.instr list =
 
 The bytecode uses labels and instructions like IFZERO, IFNZERO and GOTO to handle the while loop and the conditions with modulo. This makes the bytecode very complex to understand.
 
+# Question 8.5 
+See file Absyn.fs, CLex.fs, CPar.fsy, ex8_5.c 
+
+Test code: 
+
+compileToFile (fromFile "ex8_5.c") "ex8_5.out";;
+
+```fsharp 
+> compileToFile (fromFile "ex8_5.c") "ex8_5.out";;
+val it: Machine.instr list =
+  [LDARGS; CALL (0, "L1"); STOP; Label "L1"; CSTI 1; CSTI 1; IFZERO "L3";
+   CSTI 1; PRINTI; GOTO "L2"; Label "L3"; CSTI 2; PRINTI; Label "L2"; EQ;
+   INCSP -1; INCSP 0; RET -1]
+```
+
+```
+sarahschalls@Sarahs-MacBook-Pro MicroC %    javac Machine.java
+sarahschalls@Sarahs-MacBook-Pro MicroC %    java Machine ex8_5.out  
+1 
+Ran 0.012 seconds
+sarahschalls@Sarahs-MacBook-Pro MicroC % 
+```
 
 

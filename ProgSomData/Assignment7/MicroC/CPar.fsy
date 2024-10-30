@@ -18,7 +18,7 @@ let nl = CstI 10
 %token PLUS MINUS TIMES DIV MOD 
 %token EQ NE GT LT GE LE PREDEC PREINC /* 7.5 */
 %token NOT SEQOR SEQAND
-%token LPAR RPAR LBRACE RBRACE LBRACK RBRACK SEMI COMMA ASSIGN AMP
+%token LPAR RPAR LBRACE RBRACE LBRACK RBRACK SEMI COMMA ASSIGN AMP COLON QUESTIONMARK /* 8.5 */
 %token EOF
 
 %right ASSIGN             /* lowest precedence */
@@ -30,7 +30,7 @@ let nl = CstI 10
 %left PLUS MINUS
 %left TIMES DIV MOD 
 %nonassoc NOT AMP 
-%nonassoc PREDEC PREINC      /* 7.5 */ 
+%nonassoc PREDEC PREINC   /* 7.5 */ 
 %nonassoc LBRACK          /* highest precedence  */
 
 %start Main
@@ -138,6 +138,7 @@ ExprNotAccess:
   | Expr LE    Expr                     { Prim2("<=", $1, $3) }
   | Expr SEQAND Expr                    { Andalso($1, $3)     }
   | Expr SEQOR  Expr                    { Orelse($1, $3)      }
+  | Expr QUESTIONMARK Expr COLON Expr   { Condi ($1, $3, $5)  } /* 8.5 */
 ;
 
 AtExprNotAccess:
