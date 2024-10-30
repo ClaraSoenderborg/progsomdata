@@ -214,4 +214,24 @@ val it: Machine.instr list =
 
 ex8 is slow because the code need to look up value of i each iteration. When using GETBP, CSTI, LDI, STI it accesses memory which is slow. 
 
-# Question 8.4 - 
+# Question 8.4 - Compile ex13.c and study the symbolic bytecode to see how loops and conditionals interact; describe what you see:
+
+```fsharp
+> compile "ex13";;
+val it: Machine.instr list =
+  [LDARGS; CALL (1, "L1"); STOP; Label "L1"; INCSP 1; GETBP; CSTI 1; ADD;
+   CSTI 1889; STI; INCSP -1; GOTO "L3"; Label "L2"; GETBP; CSTI 1; ADD; GETBP;
+   CSTI 1; ADD; LDI; CSTI 1; ADD; STI; INCSP -1; GETBP; CSTI 1; ADD; LDI;
+   CSTI 4; MOD; CSTI 0; EQ; IFZERO "L7"; GETBP; CSTI 1; ADD; LDI; CSTI 100;
+   MOD; CSTI 0; EQ; NOT; IFNZRO "L9"; GETBP; CSTI 1; ADD; LDI; CSTI 400; MOD;
+   CSTI 0; EQ; GOTO "L8"; Label "L9"; CSTI 1; Label "L8"; GOTO "L6";
+   Label "L7"; CSTI 0; Label "L6"; IFZERO "L4"; GETBP; CSTI 1; ADD; LDI;
+   PRINTI; INCSP -1; GOTO "L5"; Label "L4"; INCSP 0; Label "L5"; INCSP 0;
+   Label "L3"; GETBP; CSTI 1; ADD; LDI; GETBP; CSTI 0; ADD; LDI; LT;
+   IFNZRO "L2"; INCSP -1; RET 0]
+```
+
+The bytecode uses labels and instructions like IFZERO, IFNZERO and GOTO to handle the while loop and the conditions with modulo. This makes the bytecode very complex to understand.
+
+
+
