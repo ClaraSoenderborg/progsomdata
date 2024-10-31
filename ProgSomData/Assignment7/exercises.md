@@ -234,7 +234,7 @@ val it: Machine.instr list =
 The bytecode uses labels and instructions like IFZERO, IFNZERO and GOTO to handle the while loop and the conditions with modulo. This makes the bytecode very complex to understand.
 
 # Question 8.5 
-See file Absyn.fs, CLex.fs, CPar.fsy, ex8_5.c 
+See file Absyn.fs, CLex.fsl, CPar.fsy, ex8_5.c 
 
 Test code: 
 
@@ -257,7 +257,7 @@ sarahschalls@Sarahs-MacBook-Pro MicroC %
 ```
 
 # Question 8.6
-See file Absyn.fs, CLex.fs, CPar.fsy, ex8_6.c 
+See file Absyn.fs, CLex.fsl, CPar.fsy, ex8_6.c 
 
 Our example from ex8_6.c:
 ```fsharp
